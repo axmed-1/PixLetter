@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -14,7 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.mikailov.pixletter.ui.theme.PixLetterTheme
+import androidx.compose.foundation.layout.Column
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
+import androidx.compose.ui.text.style.TextAlign
 
 
 class MainActivity : ComponentActivity() {
@@ -22,32 +29,52 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            PixLetterTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+            PixLetterTheme {GreetingText(message = "Royal Decree! \n" +
+                    "Dear $@Akhmed, \n" +
+                    "His Majesty the King \n" +
+                    "Invites you to a great feast! \n" +
+                    "Come to the castle before sunset, \n" +
+                    "otherwise, you risk losing your head!", from = "From king Arthur" )
+
+
                 }
             }
         }
     }
-}
 
+
+
+
+
+@Preview(showBackground = true)
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Surface(color = Color.Red) {
+fun RoyalInvitationPreview() {
+    PixLetterTheme {
+        GreetingText(message = "Royal Decree! \n" +
+                "Dear $@Akhmed, \n" +
+                "His Majesty the King \n" +
+                "Invites you to a great feast! \n" +
+                "Come to the castle before sunset, \n" +
+                "otherwise, you risk losing your head!", from = "From king Arthur", modifier = Modifier.padding(all = 8.dp) )
+
+    }
+}
+@Composable
+fun GreetingText(message: String,from:String,modifier: Modifier = Modifier){
+    Column(verticalArrangement = Arrangement.Center, modifier = modifier.padding(8.dp)) {
+
         Text(
-            text = "Hi my name is $name!",
-            modifier = modifier.padding(24.dp)
+            text = message, fontSize = 20.sp,
+            lineHeight = 40.sp, textAlign = TextAlign.Center
         )
     }
+    Text(
+        text = from,
+                fontSize = 24.sp,modifier = Modifier.padding(all = 16.dp).align(alignment = Alignment.End)
+
+
+    )
+
+
 }
 
-@Preview(showBackground = false)
-@Composable
-fun GreetingPreview() {
-    PixLetterTheme {
-        Greeting("Axmed")
-    }
-}
